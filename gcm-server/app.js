@@ -13,7 +13,7 @@ var QueryString = require('querystring');
 
 var PORT = 8888;
 // https://console.developers.google.comで生成したAPIキー。
-var API_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+var API_KEY = 'AIzaSyC2z4ZRwuEyznoqlMtLCAAt1DjUGa5gj2c';
 
 var deviceMap = {};
 function doService(req, res) {
@@ -30,10 +30,12 @@ function doService(req, res) {
 		// 端末登録、Androidから呼ばれる。
 		deviceMap[userId] = registrationId;
 		console.log("register:", userId, registrationId);
+		res.end();
 	} else if ("unregister" == action) {
 		// 端末登録解除、Androidから呼ばれる。
 		delete deviceMap[userId];
 		console.log("unregister:", userId, registrationId);
+		res.end();
 	} else if ("send" == action) {
 		// メッセージ送信。任意の送信アプリから呼ばれる。
 		registrationId = deviceMap[userId];
@@ -54,8 +56,8 @@ function doService(req, res) {
 
 	} else {
 		res.statusCode = 500;
+		res.end();
 	}
-	res.end();
 }
 
 function requestGCM(postData, callback) {
